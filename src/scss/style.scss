@@ -1,0 +1,170 @@
+//Import Font: Poppins.
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;700;800;900&display=swap');
+@import "~bootstrap/scss/bootstrap";
+
+body {
+  font-family: Poppins, sans-serif;
+  background-color: #1a6683;
+  color: #000;
+}
+
+a {
+  text-decoration: none;
+  color: #0099de;
+  &:hover {
+    color: rgba(0, 153, 222, .9);
+  }
+}
+
+header {
+  text-align: center;
+  padding: 1rem;
+}
+
+.todos-list {
+  margin: 20px 0;
+}
+
+.todo-item-card {
+  color: #000;
+  position: relative;
+  padding: 1rem;
+  border: none;
+  width: 75%;
+  margin: 15px auto;
+  background-color: #FFF;
+  border-radius: 10px;
+  [class*="-prior"] {
+    &:before {
+      position: absolute;
+      content: "";
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      top: -7px;
+      left: -7px;
+    }
+    &.high-prior {
+      &:before {
+        background-color: $danger;
+      }
+    }
+    &.medium-prior {
+      &:before {
+        background-color: $warning;
+      }
+    }
+    &.normal-prior {
+      &:before {
+        background-color: $primary;
+      }
+    }
+  }
+
+  button {
+    background: none;
+    border: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    &.edit {
+      right: 20px;
+    }
+  }
+  .text-display {
+    padding: 1rem;
+  }
+}
+
+.todo-form {
+  margin: 50px 0 30px 0;
+  background-color: #FFF;
+  border-radius: 10px;
+  .priority {
+    list-style-type: none;
+    padding-left: 0;
+    li {
+      label {
+        border: 1px solid rgba(0, 0, 0, .1);
+        cursor: pointer;
+        padding: 1rem;
+        transition: border-color .1s ease;
+        width: 100%;
+      }
+      input {
+        display: none;
+      }
+      &:nth-of-type(1) label {
+        &:hover, &.active {
+          border-color: $primary
+        }
+      }
+      &:nth-of-type(2) label {
+        &:hover, &.active {
+          border-color: $warning
+        }
+      }
+      &:nth-of-type(3) label {
+        &:hover, &.active {
+          border-color: $danger
+        }
+      }
+    }
+  }
+
+  .todo-input {
+    margin: auto;
+      width: 75%;
+      position: relative;
+      input {
+      padding: 15px;
+      &:focus {box-shadow: none}
+    }
+    button {
+      position: absolute;
+      right: 7px;
+      top: 9px;
+      background: #0099de;
+      border: none;
+    }
+
+  }
+
+  .message {
+    margin: 1rem 0;
+    color: $danger;
+  }
+
+}
+
+@media only screen and (max-width: 992px) {
+  .todo-input {
+    width: 100% !important;
+  }
+  .todo-item-card {
+    width: 95%;
+  }
+}
+
+
+.todo-stats {
+  color: #FFF;
+}
+
+.about-page {
+  background-color: #FFF;
+  border-radius: 10px;
+}
+
+
+.about-link {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  a {
+    color: white;
+    &:hover {
+      color: #0099de;
+    }
+  }
+}
