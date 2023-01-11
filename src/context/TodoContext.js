@@ -1,20 +1,38 @@
-import { createContext, useState } from "react"
-import { v4 as uuidv4 } from "uuid"
-import TodosData from "../data/TodosData"
+import { createContext, useState, useEffect } from "react"
 
 const TodoContext = createContext()
 
 export const TodoProvider = ({ children }) => {
-    const [todos, setTodos] = useState(TodosData)
+    const [isLoading, setIsLoading] = useState(true)
+    const [todos, setTodos] = useState([])
 
     const [todoEdit, setTodoEdit] = useState({
         item: {},
         edit: false,
     })
 
-    const addTodo = (newTodo) => {
-        newTodo.id = uuidv4()
-        setTodos([newTodo, ...todos])
+    useEffect(() => {
+        fetchTodos()
+    }, [])
+
+    //Fetch todos.
+    const fetchTodos = async () => {
+        const response = await fetch("/todos?_sort=id&_order=desc")
+        const data = await response.json()
+        setTodos(data)
+        setIsLoading(false)
+    }
+
+    const addTodo = async (newTodo) => {
+        const response = await fetch("/todos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newTodo),
+        })
+        const data = await response.json()
+        setTodos([data, ...todos])
     }
 
     //Set item to be updated.
@@ -22,16 +40,23 @@ export const TodoProvider = ({ children }) => {
         setTodoEdit({ item, edit: true })
     }
 
-    const updateTodo = (id, updatedItem) => {
-        setTodos(
-            todos.map((item) =>
-                item.id === id ? { ...item, ...updatedItem } : item
-            )
-        )
+    const updateTodo = async (id, updatedItem) => {
+        const response = await fetch(`/todos/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedItem),
+        })
+        const data = await response.json()
+        setTodos(todos.map((todo) => (todo.id === id ? data : todo)))
     }
 
-    const deleteTodo = (id) => {
+    const deleteTodo = async (id) => {
         if (window.confirm("Are you sure you want to delete this todo?")) {
+            await fetch(`/todos/${id}`, {
+                method: "DELETE",
+            })
             setTodos(todos.filter((todo) => todo.id !== id))
         }
     }
@@ -41,6 +66,7 @@ export const TodoProvider = ({ children }) => {
             value={{
                 todos,
                 todoEdit,
+                isLoading,
                 deleteTodo,
                 addTodo,
                 editTodo,

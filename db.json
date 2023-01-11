@@ -1,0 +1,24 @@
+{
+  "todos": [
+    {
+      "text": "Go shopping",
+      "prior": "medium",
+      "id": 1
+    },
+    {
+      "text": "Fix the toilet!",
+      "prior": "medium",
+      "id": 2
+    },
+    {
+      "text": "Go to dentist!",
+      "prior": "medium",
+      "id": 3
+    },
+    {
+      "text": "Chase your dreams!",
+      "prior": "high",
+      "id": 4
+    }
+  ]
+}
