@@ -2,7 +2,7 @@
   "todos": [
     {
       "text": "Go shopping",
-      "prior": "medium",
+      "prior": "normal",
       "id": 1
     },
     {
